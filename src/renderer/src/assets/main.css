@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './fonts/pretendard.css';
+
+body {
+  font-family:
+    'Pretendard',
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    sans-serif;
+}
