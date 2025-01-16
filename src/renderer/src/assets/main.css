@@ -1,8 +1,7 @@
+@import './fonts/pretendard.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import './fonts/pretendard.css';
 
 body {
   font-family:
