@@ -6,5 +6,5 @@ module.exports = {
       backgroundImage: { 'custom-bg': "url('@renderer/assets/image/background.png')" }
     }
   },
-  plugins: []
+  plugins: [require('tailwind-scrollbar')]
 }
