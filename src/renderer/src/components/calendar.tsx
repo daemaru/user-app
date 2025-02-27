@@ -9,20 +9,9 @@ interface PropsType {
   month: number
 }
 
-const defaultEvents: Event[] = [
-  {
-    id: '1',
-    title: '프로젝트 회의',
-    start: new Date(2025, 1, 15),
-    end: new Date(2025, 1, 15),
-    period: '1교시 ~ 4교시',
-    location: '2-3 세미나실',
-    description: '회의를 해요',
-    target: '대마루 팀원'
-  }
-]
+const today = new Date()
 
-const Calendar = ({ events = defaultEvents, year, month }: PropsType) => {
+const Calendar = ({ events, year, month }: PropsType) => {
   const weeks = changeDate(year, month)
   const weekCount = weeks.length
   const [selectDay, setSelectDay] = useState(new Date().getDate())
@@ -158,7 +147,6 @@ const Calendar = ({ events = defaultEvents, year, month }: PropsType) => {
                         title={event.title}
                       >
                         <div className="rounded-full bg-[#ff8a3d] w-1 h-1"></div>
-
                         {event.title}
                       </div>
                     )
@@ -170,21 +158,23 @@ const Calendar = ({ events = defaultEvents, year, month }: PropsType) => {
         </div>
       </div>
       <div className="flex flex-col items-center w-48 gap-4 px-3 mt-10">
-        {defaultEvents.map((event) => {
-          return (
-            <div className="flex flex-col w-full shrink-0">
-              <div className="flex items-center gap-1">
-                <div className="rounded-full bg-[#ff8a3d] w-1 h-1"></div>
-                <span>{event.title}</span>
+        {events.map((event) => {
+          if (event.start.getDate() <= selectDay && event.end.getDate() >= selectDay) {
+            return (
+              <div className="flex flex-col w-full shrink-0">
+                <div className="flex items-center gap-1">
+                  <div className="rounded-full bg-[#ff8a3d] w-1 h-1"></div>
+                  <span>{event.title}</span>
+                </div>
+                <span className="px-2">{event.description}</span>
+                <div className="px-2 flex flex-col text-[#71717a] text-xs">
+                  <span>{`시간: ${event.period}`}</span>
+                  <span>{`장소: ${event.location}`}</span>
+                  <span>{`대상: ${event.target}`}</span>
+                </div>
               </div>
-              <span className="px-2">{event.description}</span>
-              <div className="px-2 flex flex-col text-[#71717a] text-xs">
-                <span>{`시간: ${event.period}`}</span>
-                <span>{`장소: ${event.location}`}</span>
-                <span>{`대상: ${event.target}`}</span>
-              </div>
-            </div>
-          )
+            )
+          }
         })}
         <Logo fill="black" className="absolute w-13 bottom-6 right-3" />
       </div>

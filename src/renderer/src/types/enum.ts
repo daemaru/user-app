@@ -1,5 +1,4 @@
 export const DayOfTheWeek = ['월', '화', '수', '목', '금', '토', '일']
-export const Example = ['다문화 이해 교육', '모의 토익', '기말고사']
 export const Months = [
   'January',
   'February',
@@ -14,3 +13,21 @@ export const Months = [
   'November',
   'December'
 ]
+
+export interface Event {
+  id: string
+  title: string
+  start: Date
+  end: Date
+  period: string
+  location: string
+  description: string
+  target: string
+}
+
+export interface Archive {
+  index: number
+  schedule_id: string
+  command: 'CREATE' | 'UPDATE' | 'DELETE'
+  context: string[]
+}

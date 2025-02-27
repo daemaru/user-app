@@ -3,7 +3,7 @@ import Calendar from './components/calendar'
 import Day from './components/day'
 import { changeDate } from './function/getCalendar'
 import { useEffect, useState } from 'react'
-import { DayOfTheWeek, Example, Months } from './types/enum'
+import { DayOfTheWeek, Months, Event } from './types/enum'
 
 const today = new Date()
 
@@ -23,6 +23,19 @@ function App() {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
+
+  const defaultEvents: Event[] = [
+    {
+      id: '1',
+      title: '프로젝트 회의',
+      start: new Date(2025, 1, 15),
+      end: new Date(2025, 1, 22),
+      period: '1교시 ~ 4교시',
+      location: '2-3 세미나실',
+      description: '회의를 해요',
+      target: '대마루 팀원'
+    }
+  ]
 
   return (
     <div className="flex w-screen h-screen">
@@ -53,12 +66,19 @@ function App() {
             </div>
           </div>
           <div className="flex flex-col gap-1 mt-4 overflow-y-scroll scrollbar-none">
-            {Example.map((schedule) => (
-              <div className="flex items-center gap-2">
-                <div className="bg-[#ff8a3d] w-2 h-2 rounded-full"></div>
-                <div>{schedule}</div>
-              </div>
-            ))}
+            {defaultEvents.map((schedule) => {
+              if (
+                schedule.start.getMonth() === today.getMonth() ||
+                schedule.end.getMonth() === today.getMonth()
+              ) {
+                return (
+                  <div className="flex items-center gap-2">
+                    <div className="bg-[#ff8a3d] w-2 h-2 rounded-full"></div>
+                    <div>{schedule.title}</div>
+                  </div>
+                )
+              }
+            })}
           </div>
         </div>
       )}
@@ -84,7 +104,7 @@ function App() {
             <span className="text-2xl font-semibold text-[#ff8a3d]">{Months[selectMonth[1]]}</span>
           </div>
         </div>
-        <Calendar year={selectMonth[0]} month={selectMonth[1] + 1} />
+        <Calendar events={defaultEvents} year={selectMonth[0]} month={selectMonth[1] + 1} />
       </div>
     </div>
   )
